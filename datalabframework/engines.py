@@ -143,6 +143,11 @@ class SparkEngine():
                 .option("user",pmd['username'])\
                 .option('password',pmd['password'])\
                 .load(**options)
+        elif pmd['service'] == 'mongodb':
+            obj = self._ctx.read.format('com.stratio.datasource.mongodb') \
+                .option("host", pmd['hostname']) \
+                .option("database",pmd['database']).option('collection',rmd['path']) \
+                .load(**options)    
         else:
             raise('downt know how to handle this')
 
