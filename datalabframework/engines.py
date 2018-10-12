@@ -144,10 +144,12 @@ class SparkEngine():
                 .option('password',pmd['password'])\
                 .load(**options)
         elif pmd['service'] == 'mongodb':
-            obj = self._ctx.read.format('com.stratio.datasource.mongodb') \
+            obj = self._ctx.read\
+                .format('com.stratio.datasource.mongodb') \
                 .option("host", pmd['hostname']) \
-                .option("database",pmd['database']).option('collection',rmd['path']) \
-                .load(**options)    
+                .option("database",pmd['database'])\
+                .option('collection',rmd['path']) \
+                .load(**options)
         else:
             raise('downt know how to handle this')
 
@@ -230,6 +232,13 @@ class SparkEngine():
                 .option("driver", driver)\
                 .option("user",pmd['username'])\
                 .option('password',pmd['password'])\
+                .save(**kargs)
+        elif pmd['service'] == 'mongodb':
+            return obj.write \
+                .format('com.stratio.datasource.mongodb') \
+                .option("host", pmd['hostname']) \
+                .option("database",pmd['database'])\
+                .option('collection',rmd['path']) \
                 .save(**kargs)
         else:
             raise('downt know how to handle this')
