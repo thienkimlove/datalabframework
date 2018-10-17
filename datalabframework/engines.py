@@ -150,6 +150,15 @@ class SparkEngine():
                 .option("database",pmd['database'])\
                 .option('collection',rmd['path']) \
                 .load(**options)
+        elif pmd['service'] == 'oracle':
+            obj = self._ctx.read \
+                .format("jdbc")\
+                .option("url", "jdbc:oracle:thin:{0}/{1}@//{2}:{3}/SID".format(pmd['username'], pmd['password'], pmd['hostname'], pmd['port']))\
+                .option("dbtable", pmd['database'])\
+                .option("user", pmd['username'])\
+                .option("password", pmd['password'])\
+                .option("driver", "oracle.jdbc.driver.OracleDriver")\
+                .load(**options)
         else:
             raise('downt know how to handle this')
 
