@@ -153,8 +153,8 @@ class SparkEngine():
         elif pmd['service'] == 'oracle':
             obj = self._ctx.read \
                 .format("jdbc")\
-                .option("url", "jdbc:oracle:thin:{0}/{1}@//{2}:{3}/SID".format(pmd['username'], pmd['password'], pmd['hostname'], pmd['port']))\
-                .option("dbtable", pmd['database'])\
+                .option("url", "jdbc:oracle:thin:{0}/{1}@//{2}:{3}/SID".format(pmd['username'], pmd['password'], pmd['hostname'], pmd['port'])) \
+                .option("dbtable", pmd['database']+'.'+rmd['path']) \
                 .option("user", pmd['username'])\
                 .option("password", pmd['password'])\
                 .option("driver", "oracle.jdbc.driver.OracleDriver")\
@@ -248,6 +248,15 @@ class SparkEngine():
                 .option("host", pmd['hostname']) \
                 .option("database",pmd['database'])\
                 .option('collection',rmd['path']) \
+                .save(**kargs)
+        elif pmd['service'] == 'oracle':
+            return obj.write \
+                .format("jdbc") \
+                .option("url", "jdbc:oracle:thin:{0}/{1}@//{2}:{3}/SID".format(pmd['username'], pmd['password'], pmd['hostname'], pmd['port'])) \
+                .option("dbtable", pmd['database']+'.'+rmd['path']) \
+                .option("user", pmd['username']) \
+                .option("password", pmd['password']) \
+                .option("driver", "oracle.jdbc.driver.OracleDriver") \
                 .save(**kargs)
         else:
             raise('downt know how to handle this')
