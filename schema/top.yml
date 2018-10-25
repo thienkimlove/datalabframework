@@ -1,0 +1,49 @@
+---
+type : object
+properties:
+  profile:
+    type: string
+  engines:
+    type: object
+  providers:
+    type: object
+  resources:
+    type: object
+  variables:
+    type: object
+  loggers:
+    type: object
+    properties:
+      severity:
+        type: string
+      stream:
+        type: object
+        properties:
+          severity:
+            type: string
+          enable:
+            type: boolean
+        additionalProperties: false
+      kafka:
+        type: object
+        properties:
+          severity:
+            type: string
+          enable:
+            type: boolean
+          hosts:
+            type: string
+          topic:
+            type: string
+        additionalProperties: false
+        required:
+          - hosts
+    additionalProperties: false
+required:
+  - profile
+  - engines
+  - providers
+  - resources
+  - variables
+  - loggers
+additionalProperties: false
